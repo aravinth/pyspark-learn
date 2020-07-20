@@ -42,13 +42,15 @@ def extract_table_coords(image):
   tables          = TableRepo.response ['response'] ['tables']
   lines           = []
   for table in tables:
+    base_x = int(table.get('x'))
+    base_y = int(table.get('y'))
     for t in table.get('rect'):
-      x = t['x']
-      y = t['y']
-      w = t['w']
-      h = t['h']
-      row = t['row']
-      col = t['col']
+      x = base_x + int(t['x'])
+      y = base_y + int(t['y'])
+      w = int(t['w'])
+      h = int(t['h'])
+      row = int(t['row'])
+      col = int(t['col'])
       lines.append((row, col, x, y, w, h))
   return os.path.basename(name), lines
 
